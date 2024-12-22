@@ -1,29 +1,47 @@
-$desktopFolderContents = "C:\Users\ridvikpal\Desktop\"
-$documentsFolderContents = "C:\Users\ridvikpal\Documents\"
-$picturesFolderContents = "C:\Users\ridvikpal\Pictures\"
-$musicFolderContents = "C:\Users\ridvikpal\Music\"
-$videosFolderContents = "C:\Users\ridvikpal\Videos\"
+# Define the folders to backup
+$foldersToArchive = @(
+    "$env:USERPROFILE\Desktop", 
+    "$env:USERPROFILE\Documents", 
+    "$env:USERPROFILE\Music", 
+    "$env:USERPROFILE\Videos", 
+    "$env:USERPROFILE\Pictures"
+    "$env:USERPROFILE\Downloads"
+)
 
-$desktopBackupFolder = "D:\Desktop"
-$documentsBackupFolder = "D:\Documents"
-$photosBackupFolder = "D:\Pictures"
-$musicBackupFolder = "D:\Music"
-$videosBackupFolder = "D:\Videos"
+# Ask the user for the external drive they want to backup the archive ot
+$driveLetter = (Read-Host -Prompt "Please enter the external drive letter to backup folders to (make sure the drive is mounted)").ToUpper()
 
-Write-Host "Starting backup to D: (Backup) drive`n"
+# Check if the external drive is mounted at that location
+if (!(Test-Path -PathType Container -Path "${driveLetter}:")) {
+    throw "Unable to detect the ${driveLetter}: drive. Please ensure it is properly mounted."
+}
 
-# Backup the desktop folder
-robocopy $desktopFolderContents $desktopBackupFolder /MIR /Z /XA:SH /R:3 /W:0
-# Backup the documents folder
-robocopy $documentsFolderContents $documentsBackupFolder /MIR /Z /XA:SH /R:3 /W:0
-# Backup the photos folder
-robocopy $picturesFolderContents $photosBackupFolder /MIR /Z /XA:SH /R:3 /W:0
-# Backup the music folder
-robocopy $musicFolderContents $musicBackupFolder /MIR /Z /XA:SH /R:3 /W:0
-# Backup the videos folder
-robocopy $videosFolderContents $videosBackupFolder /MIR /Z /XA:SH /R:3 /W:0
+Write-Host "Backing up the following folders:`n"
 
-Write-Host "`nBackup completed."
+foreach ($folder in $foldersToArchive) {
+    Write-Host $folder
+}
+
+Write-Host "`nStarting backup to D: (Backup) drive`n"
+
+foreach ($folder in $foldersToArchive) {
+    # Get the leaf (actual folder name not path) from the folder path
+    $leafName = Split-Path -Path $folder -Leaf
+
+    # Build the command to create the backup using robocopy
+    $cmdArgs = @(
+        $folder,
+        "${driveLetter}:\$leafName",
+        "/MIR",     # Mirror the source directory to the destination directory.
+        "/Z",       # Restartable mode. Robocopy can pick up from where it was last.
+        "/XA:SH",   # Exclude system and hidden files
+        "/R:3",     # Retry 3 times if a file fails
+        "/W:0"      # Wait 0 seconds between retries
+        )
+
+    # Backup the files using the robocopy command
+    Start-Process -FilePath robocopy -ArgumentList $cmdArgs -NoNewWindow -Wait
+}
 
 # Wait for the user to click enter to exit
-Read-Host -Prompt "Press enter to exit..."
+Read-Host -Prompt "Backup completed. Press enter to exit..."
