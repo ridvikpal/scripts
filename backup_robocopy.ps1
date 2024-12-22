@@ -44,4 +44,4 @@ foreach ($folder in $foldersToArchive) {
 }
 
 # Wait for the user to click enter to exit
-Read-Host -Prompt "Backup completed. Press enter to exit..."
+Read-Host -Prompt "Backup completed. Press enter to exit"
