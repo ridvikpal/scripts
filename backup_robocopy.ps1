@@ -24,3 +24,6 @@ robocopy $musicFolderContents $musicBackupFolder /MIR /Z /XA:SH /R:3 /W:0
 robocopy $videosFolderContents $videosBackupFolder /MIR /Z /XA:SH /R:3 /W:0
 
 Write-Host "`nBackup completed."
+
+# Wait for the user to click enter to exit
+Read-Host -Prompt "Press enter to exit..."
