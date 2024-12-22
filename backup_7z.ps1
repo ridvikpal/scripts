@@ -37,10 +37,19 @@ foreach ($folder in $foldersToArchive) {
 }
 Write-Host "`nBackup will be stored in the $localArchive archive locally`n"
 
+$passwordFilePath = ".\password.txt"
+
+# If a file exists specifying a password, then use that password
+if (!(Test-Path -Path $passwordFilePath)) {
+    $password = "`"`""
+} else {
+    $password = Get-Content -Path $passwordFilePath -Raw
+}
+
 # Build the command to create the 7zip archive
 $cmdArgs = @(
     "a",                    # 'a' means to add files to the archive
-    "-p`"`"",               # Password protection
+    "-p$password",               # Password protection
     $localArchive            # Output archive file name
     ) + $foldersToArchive   # Add the folders to include
 
