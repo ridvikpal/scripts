@@ -1,37 +1,35 @@
-# Define the folders to backup
-$foldersToArchive = @(
-    "$env:USERPROFILE\Desktop", 
-    "$env:USERPROFILE\Documents", 
-    "$env:USERPROFILE\Music", 
-    "$env:USERPROFILE\Videos", 
-    "$env:USERPROFILE\Pictures"
-    "$env:USERPROFILE\Downloads"
-)
+# The path of the txt file containing the folders to backup
+$foldersToBackupPath = ".\folders.txt"
+
+# Load the folders to backup from the txt file
+$foldersToBackup = Get-Content -Path $foldersToBackupPath
+
+# Inform the user which folders are being backed up
+Write-Host "`nBacking up the following folders:`n"
+foreach ($folder in $foldersToBackup) {
+    Write-Host $folder
+}
 
 # Ask the user for the external drive they want to backup the archive ot
-$driveLetter = (Read-Host -Prompt "Please enter the external drive letter to backup folders to (make sure the drive is mounted)").ToUpper()
+$driveLetter = (Read-Host -Prompt "`nPlease enter the external drive's mounted filesystem letter to backup the folders to").ToUpper()
 
 # Check if the external drive is mounted at that location
 if (!(Test-Path -PathType Container -Path "${driveLetter}:")) {
     throw "Unable to detect the ${driveLetter}: drive. Please ensure it is properly mounted."
 }
 
-# Inform the user which folders are being backed up
-Write-Host "Backing up the following folders:`n"
-foreach ($folder in $foldersToArchive) {
-    Write-Host $folder
-}
+# Inform the user the backup is starting
 Write-Host "`nStarting backup to D: (Backup) drive`n"
 
 # Backup each folder 1 by 1
-foreach ($folder in $foldersToArchive) {
+foreach ($folder in $foldersToBackup) {
     # Get the leaf (actual folder name not path) from the folder path
     $leafName = Split-Path -Path $folder -Leaf
 
-    # Build the command to create the backup using robocopy
+    # Build the command array to create the backup using robocopy
     $cmdArgs = @(
         $folder,
-        "${driveLetter}:\$leafName",
+        "${driveLetter}:\${leafName}",
         "/MIR",     # Mirror the source directory to the destination directory.
         "/Z",       # Restartable mode. Robocopy can pick up from where it was last.
         "/XA:SH",   # Exclude system and hidden files
