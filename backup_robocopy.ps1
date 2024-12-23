@@ -10,6 +10,7 @@ foreach ($folder in $foldersToBackup) {
     Write-Host $folder
 }
 
+### MAKE SURE WHATEVER EXTERNAL DRIVE YOU BACKUP TO IS ENCRYPTED ###
 # Ask the user for the external drive they want to backup the archive ot
 $driveLetter = (Read-Host -Prompt "`nPlease enter the external drive's mounted filesystem letter to backup the folders to").ToUpper()
 
