@@ -78,5 +78,11 @@ Copy-Item $localArchive -Destination "$backupDirectory\"
 # Inform the user the backup archive was copied to the external drive
 Write-Host "`nThe backup archive was copied to $backupDirectory\`n"
 
+# Get the current timestamp
+$timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+
+# Write the backup date information to the drive
+Set-Content -Path "${driveLetter}:\backup_timestamp.txt" -Value "Backed up at ${timestamp}"
+
 # Wait for the user to click enter to exit
 Read-Host -Prompt "Backup completed. Press enter to exit"

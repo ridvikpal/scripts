@@ -42,5 +42,11 @@ foreach ($folder in $foldersToBackup) {
     Start-Process -FilePath robocopy -ArgumentList $cmdArgs -NoNewWindow -Wait
 }
 
+# Get the current timestamp
+$timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
+
+# Write the backup date information to the drive
+Set-Content -Path "${driveLetter}:\backup_timestamp.txt" -Value "Backed up at ${timestamp}"
+
 # Wait for the user to click enter to exit
 Read-Host -Prompt "Backup completed. Press enter to exit"
