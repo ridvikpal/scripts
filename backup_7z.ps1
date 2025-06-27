@@ -7,13 +7,13 @@ if (!(Test-Path -Path $sevenZipPath)) {
 }
 
 # Today's date to archive the backup
-$date = (Get-Date).ToString('yyyy-MM-dd')
+$timestamp = (Get-Date).ToString("yyyy-MM-dd_HH:mm:ss")
 
 # The local backup directory path
 $localBackupDirectory = "$env:USERPROFILE\Backup"
 
 # Define the output archive path and name
-$localArchive = "$localBackupDirectory\$date-backup.7z"  # Adjust output path and name as necessary
+$localArchive = "$localBackupDirectory\$timestamp-backup.7z"  # Adjust output path and name as necessary
 
 # Check if the backup folder exists and if not, then create it
 if (!(Test-Path -PathType Container -Path $localBackupDirectory)) {
@@ -77,12 +77,6 @@ Copy-Item $localArchive -Destination "$backupDirectory\"
 
 # Inform the user the backup archive was copied to the external drive
 Write-Host "`nThe backup archive was copied to $backupDirectory\`n"
-
-# Get the current timestamp
-$timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
-
-# Write the backup date information to the drive
-Set-Content -Path "${driveLetter}:\backup_timestamp.txt" -Value "Backed up at ${timestamp}"
 
 # Wait for the user to click enter to exit
 Read-Host -Prompt "Backup completed. Press enter to exit"
