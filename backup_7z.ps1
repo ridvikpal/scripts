@@ -7,13 +7,13 @@ if (!(Test-Path -Path $sevenZipPath)) {
 }
 
 # Today's date to archive the backup
-$timestamp = (Get-Date).ToString("yyyy-MM-dd_HH:mm:ss")
+$timestamp = (Get-Date).ToString("yyyy.MM.dd.T.HH.mm.ss")
 
 # The local backup directory path
 $localBackupDirectory = "$env:USERPROFILE\Backup"
 
 # Define the output archive path and name
-$localArchive = "$localBackupDirectory\$timestamp-backup.7z"  # Adjust output path and name as necessary
+$localArchive = "$localBackupDirectory\backup.$timestamp.7z"  # Adjust output path and name as necessary
 
 # Check if the backup folder exists and if not, then create it
 if (!(Test-Path -PathType Container -Path $localBackupDirectory)) {
