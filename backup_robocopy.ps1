@@ -10,30 +10,27 @@ foreach ($folder in $foldersToBackup) {
     Write-Host $folder
 }
 
-### MAKE SURE WHATEVER EXTERNAL DRIVE YOU BACKUP TO IS ENCRYPTED ###
 # Ask the user for the external drive they want to backup the archive ot
 $driveLetter = (Read-Host -Prompt "`nPlease enter the external drive's mounted filesystem letter to backup the folders to").ToUpper()
-
-# Inform the user that their data will be overwritten:
-$confirm = (Read-Host -Prompt "`------ NOTE YOUR $driveLetter`: DRIVE WILL BE OVERWRITTEN WITH THE SELECTED FOLDERS (y/n) ------")
-
-if ($confirm -ne "y") {
-    "`n Cancelling backup...`n"
-    exit 0
-}
 
 # Check if the external drive is mounted at that location
 if (!(Test-Path -PathType Container -Path "${driveLetter}:")) {
     # Inform the user of the error
-    Write-Error "Unable to detect the ${driveLetter}: drive. Please ensure it is properly mounted, and then try again."
+    Write-Error "`nUnable to detect the ${driveLetter}: drive. Please ensure it is properly mounted, and then try again.`n"
 
     # Wait for the user to click enter to exit
-    Read-Host -Prompt "Press enter to exit"
+    Read-Host -Prompt "`nPress enter to exit`n"
     throw
 }
 
 # Inform the user the backup is starting
-Write-Host "`nStarting backup to D: (Backup) drive`n"
+Write-Host "`nStarting backup to ${driveLetter}: drive`n"
+
+# Today's date to archive the backup
+$timestamp = (Get-Date).ToString("yyyy.MM.dd.T.HH.mm.ss")
+
+# Get the hostname of the machine
+$hostname = (hostname);
 
 # Backup each folder 1 by 1
 foreach ($folder in $foldersToBackup) {
@@ -43,7 +40,7 @@ foreach ($folder in $foldersToBackup) {
     # Build the command array to create the backup using robocopy
     $cmdArgs = @(
         $folder,
-        "${driveLetter}:\${leafName}",
+        "${driveLetter}:\${hostname}.backup\${timestamp}\${leafName}",
         "/MIR",     # Mirror the source directory to the destination directory.
         "/Z",       # Restartable mode. Robocopy can pick up from where it was last.
         "/XA:SH",   # Exclude system and hidden files
@@ -54,12 +51,6 @@ foreach ($folder in $foldersToBackup) {
     # Backup the files using the robocopy command
     Start-Process -FilePath robocopy -ArgumentList $cmdArgs -NoNewWindow -Wait
 }
-
-# Get the current timestamp
-$timestamp = (Get-Date).ToString("yyyy-MM-dd HH:mm:ss")
-
-# Write the backup date information to the drive
-Set-Content -Path "${driveLetter}:\backup_timestamp.txt" -Value "Backed up at ${timestamp}"
 
 # Wait for the user to click enter to exit
 Read-Host -Prompt "Backup completed. Press enter to exit"
