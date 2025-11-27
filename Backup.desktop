@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Backup
+Terminal=true
+Path=/home/ridvikpal/github/backup-scripts
+Exec=bash -c "./backup.sh"
