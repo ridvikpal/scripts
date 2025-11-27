@@ -59,6 +59,7 @@ for SRC in "${FOLDERS[@]}"; do
         --no-links \
         --delete \
         --info=progress2 \
+        --chmod=Dugo=rx,Fugo=r \
         --exclude='.*' \
         "$SRC"/ "$DEST"/
 
