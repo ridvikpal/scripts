@@ -20,21 +20,27 @@ for folder in "${FOLDERS[@]}"; do
     echo "$folder"
 done
 
-# Get the backup drive mountpoint from the user
-echo ""
-read -rp "Please enter the *mount point* of the backup drive (e.g. /media/user/backup): " DEST_DRIVE
 
-# Validate drive path
-if [[ ! -d "$DEST_DRIVE" ]]; then
-    echo ""
-    echo "Error: '$DEST_DRIVE' does not exist or is not mounted."
-    read -rp "Press enter to exit..."
-    exit 1
-fi
+# get all the mounted external drives
+mounted_drive_paths=$(findmnt -l -o TARGET | grep /media)
+
+# let the user choose an external drive from the available mounted drives.
+echo ""
+echo "Choose a mounted drive:"
+select DRIVE_PATH in "${mounted_drive_paths[@]}"; do
+    if [[ -n "$DRIVE_PATH" ]]; then
+        echo "You selected backup drive mounted at: $DRIVE_PATH"
+        break
+    else
+        echo "Invalid choice."
+        read -rp "Press enter to exit..."
+        exit 1
+    fi
+done
 
 # Get the computer hostname
 HOSTNAME=$(hostname)
-BACKUP_PATH="${DEST_DRIVE}/${HOSTNAME}"
+BACKUP_PATH="${DRIVE_PATH}/${HOSTNAME}"
 
 # Inform the user the backup is starting
 echo ""
