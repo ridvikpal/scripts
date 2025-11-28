@@ -14,7 +14,7 @@ mapfile -t FOLDERS < "$FOLDERS_FILE"
 
 # Inform the user which folders are being backed up
 echo ""
-echo "Backing up the following folders:"
+echo "Backing up the following folders from PC to an external drive:"
 echo "---------------------------------"
 for folder in "${FOLDERS[@]}"; do
     echo "$folder"

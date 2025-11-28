@@ -14,7 +14,7 @@ mapfile -t FOLDERS < "$FOLDERS_FILE"
 
 # Inform the user which folders are being restored
 echo ""
-echo "Restoring the following folders:"
+echo "Restoring the following folders from an external drive to PC:"
 echo "---------------------------------"
 for folder in "${FOLDERS[@]}"; do
     echo "$folder"
