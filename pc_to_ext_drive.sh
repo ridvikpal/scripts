@@ -20,7 +20,6 @@ for folder in "${FOLDERS[@]}"; do
     echo "$folder"
 done
 
-
 # get all the mounted external drives
 mounted_drive_paths=$(findmnt -l -o TARGET | grep /media)
 
