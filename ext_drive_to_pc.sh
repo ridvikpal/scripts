@@ -48,7 +48,7 @@ echo "Starting restore from: $BACKUP_PATH"
 echo "--------------------------------"
 
 # Ensure backup folder exists
-if [[ ! -f "$BACKUP_PATH" ]]; then
+if [[ ! -d "$BACKUP_PATH" ]]; then
     echo "Error: Backup parent folder '$BACKUP_PATH' not found."
     exit 1
 fi
@@ -61,7 +61,7 @@ for DEST in "${FOLDERS[@]}"; do
     SRC="${BACKUP_PATH}/${LEAF_NAME}"
 
     echo ""
-    echo "Restoring up '$SRC' -> '$DEST'"
+    echo "Restoring '$SRC' -> '$DEST'"
 
     # Restore using rsync, ignoring system (.*) files
     rsync -avh \
