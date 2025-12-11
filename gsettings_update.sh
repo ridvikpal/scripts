@@ -12,6 +12,6 @@ gsettings set org.gnome.desktop.peripherals.pointingstick accel-profile 'flat'
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down ['']
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up ['']
 
-# In case you ever want to reenable these GNOME keyboard shortcuts:
-#gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down ['<Control><Shift><Alt>Down']
-#gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up ['<Control><Shift><Alt>Up']
+# In case you ever want to reset a gsettings key-value pair, use:
+# gsettings reset SCHEMA [:PATH]  KEY
+# Ex: gsettings reset org.gnome.desktop.wm.keybindings move-to-workspace-down
