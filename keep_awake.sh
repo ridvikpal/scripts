@@ -28,3 +28,4 @@ systemd-inhibit \
 # Inform the user 'sleep infinity' is interrupted (e.g., by Ctrl+C).
 echo ""
 echo "Inhibition released. The system can now idle, sleep/suspend, and shutdown."
+read -rp "Press enter to exit..."

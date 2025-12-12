@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=keep_awake
+Terminal=true
+Path=/home/ridvikpal/github/scripts
+Exec=bash -c "./keep_awake.sh"
