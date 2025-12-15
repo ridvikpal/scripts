@@ -7,7 +7,7 @@ if [[ $EUID -ne 0 ]]; then
 fi
 
 # then ensure the user has upgraded their machine first
-read -p "This script will install Ubuntu snap packages. Did you run snap refresh first? (Y/n) " -n 1 -r
+read -rp "This script will install Ubuntu snap packages. Did you run snap refresh first? (Y/n) " -n 1
 echo ""
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
