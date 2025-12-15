@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Path to the file that contains the list of folders to back up
-FOLDERS_FILE="./pc_folders_to_backup.txt"
+FOLDERS_FILE="../text/pc_folders_to_backup.txt"
 
 # Ensure folders file exists
 if [[ ! -f "$FOLDERS_FILE" ]]; then
