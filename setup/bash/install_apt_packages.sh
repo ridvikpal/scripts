@@ -28,6 +28,9 @@ apt-get install -y default-jre
 # install git
 apt-get install -y git
 
+# install c, c++ dev packages
+apt-get install gcc g++ gdb make
+
 # install python3
 apt-get install -y python3 python3-pip python3-venv
 
