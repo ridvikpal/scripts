@@ -2,5 +2,4 @@
 Type=Application
 Name=keep_awake
 Terminal=true
-Path=/home/ridvikpal/github/scripts/utilities/bash
-Exec=bash -c "./keep_awake.sh"
+Exec=bash -c "$HOME/github/scripts/utilities/bash/keep_awake.sh"

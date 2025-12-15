@@ -2,5 +2,4 @@
 Type=Application
 Name=pc_to_ext_drive
 Terminal=true
-Path=/home/ridvikpal/github/scripts/backup/bash
-Exec=bash -c "./pc_to_ext_drive.sh"
+Exec=bash -c "cd $HOME/github/scripts/backup/bash && ./pc_to_ext_drive.sh"
