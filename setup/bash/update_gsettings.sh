@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# This script changes some hidden gnome settings using gsettings
-# for my preferred user experience.
-
 # set the background to black
 echo "Setting background to black"
 gsettings set org.gnome.desktop.background picture-options 'none'
