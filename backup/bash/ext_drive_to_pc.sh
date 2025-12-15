@@ -59,7 +59,12 @@ if [[ ! -d "$BACKUP_PATH" ]]; then
 fi
 
 # Restore each folder 1 by 1
-for DEST in "${FOLDERS[@]}"; do
+for DEST_RAW in "${FOLDERS[@]}"; do
+    # first get the full folder path
+    # expanded in case it includes variables
+    # such as $HOME
+    DEST=$(eval echo "$DEST_RAW")
+
     # Extract folder name (leaf)
     LEAF_NAME=$(basename "$DEST")
     # Create the backup path using the leaf name

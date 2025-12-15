@@ -59,7 +59,12 @@ echo "--------------------------------"
 mkdir -p "$BACKUP_PATH"
 
 # Backup each folder 1 by 1
-for SRC in "${FOLDERS[@]}"; do
+for SRC_RAW in "${FOLDERS[@]}"; do
+    # first get the full folder path
+    # expanded in case it includes variables
+    # such as $HOME
+    SRC=$(eval echo "$SRC_RAW")
+
     # The full phone src data path
     FULL_SRC_PATH="${PHONE_DATA_PATH}/${SRC}"
 

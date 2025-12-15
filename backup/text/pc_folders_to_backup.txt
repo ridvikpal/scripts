@@ -1,5 +1,5 @@
-/home/ridvikpal/Documents
-/home/ridvikpal/Pictures
-/home/ridvikpal/Videos
-/home/ridvikpal/Desktop
-/home/ridvikpal/Downloads
+$HOME/Documents
+$HOME/Pictures
+$HOME/Videos
+$HOME/Desktop
+$HOME/Downloads

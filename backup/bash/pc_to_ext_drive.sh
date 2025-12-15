@@ -55,7 +55,12 @@ echo "--------------------------------"
 mkdir -p "$BACKUP_PATH"
 
 # Backup each folder 1 by 1
-for SRC in "${FOLDERS[@]}"; do
+for SRC_RAW in "${FOLDERS[@]}"; do
+    # first get the full folder path
+    # expanded in case it includes variables
+    # such as $HOME
+    SRC=$(eval echo "$SRC_RAW")
+
     # Extract folder name (leaf)
     LEAF_NAME=$(basename "$SRC")
     # Create the backup path using the leaf name
