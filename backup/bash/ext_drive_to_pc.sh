@@ -71,7 +71,8 @@ for DEST in "${FOLDERS[@]}"; do
     # Restore using rsync, ignoring system (.*) files
     rsync -avh \
         --no-links \
-        --delete \
+        --delete-delay \
+        --itemize-changes \
         --info=progress2 \
         --exclude='.*' \
         "$SRC"/ "$DEST"/

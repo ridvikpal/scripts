@@ -74,7 +74,8 @@ for SRC in "${FOLDERS[@]}"; do
     # Backup using rsync, ignoring system (.*) files
     rsync -avh \
         --no-links \
-        --delete \
+        --delete-delay \
+        --itemize-changes \
         --info=progress2 \
         --exclude='.*' \
         "$FULL_SRC_PATH"/ "$DEST"/
