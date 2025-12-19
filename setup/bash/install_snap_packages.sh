@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ####################
-# This script is used to install certain snap packages in Ubuntu.
+# This script is used to install certain snap packages in a Linux PC.
 ####################
 
 # first ensure the user is running this script as root
@@ -19,9 +19,11 @@ then
     exit 1
 fi
 
+# install the core snap package
+snap install core
+
 # install spotify
 snap install spotify
 
 # install VS Code
 snap install code --classic
-

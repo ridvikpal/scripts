@@ -21,6 +21,7 @@ gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-up ['']
 gsettings set org.gnome.desktop.wm.keybindings move-to-workspace-down ['']
 
 # Inform the user about how to reset a gsettings key-value pair
+echo ""
 echo "In case you ever want to reset a gsettings key-value pair, use:"
 echo "gsettings reset SCHEMA [:PATH]  KEY"
 echo "Ex: gsettings reset org.gnome.desktop.wm.keybindings move-to-workspace-down"

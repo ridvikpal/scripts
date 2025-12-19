@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ####################
-# This script is used to keep an Ubuntu laptop awake 
+# This script is used to keep a Linux laptop awake 
 # and prevent sleeping using gnome-session-inhibit.
 ####################
 

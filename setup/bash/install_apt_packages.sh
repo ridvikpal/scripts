@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ####################
-# This script is used to install certain apt/deb packages in Ubuntu.
+# This script is used to install certain apt/deb packages in Debian Linux.
 ####################
 
 # first ensure the user is running this script as root
@@ -41,7 +41,7 @@ apt-get install -y gcc g++ gdb make
 apt-get install -y texlive texlive-latex-extra chktex
 
 # install libreoffice
-apt-get install -y libreoffice
+apt-get install -y libreoffice libreoffice-gnome
 
 # install vlc
 apt-get install -y vlc

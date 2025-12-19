@@ -2,7 +2,7 @@
 
 ####################
 # This script is used to restore certain folders
-# from an external drive to an Ubuntu PC using rsync.
+# from an external drive to a Linux PC using rsync.
 ####################
 
 # Path to the file that contains the list of folders to restore
