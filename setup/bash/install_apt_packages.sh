@@ -19,8 +19,25 @@ then
     exit 1
 fi
 
+# install gnome-core
+apt-get install -y gnome-core
+
+# install fingerprint support:
+apt-get install -y fprintd libpam-fprintd
+
+# install apt-file
+apt-get install -y apt-file
+# and update it's repository
+apt-file update
+
+# install rsync
+apt-get install -y rsync
+
 # install recommended fonts
 apt-get install -y fonts-recommended
+
+# install chromium browser
+apt-get install -y chromium
 
 # install the default java runtime
 apt-get install -y default-jre
