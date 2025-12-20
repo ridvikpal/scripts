@@ -19,9 +19,6 @@ then
     exit 1
 fi
 
-# install the core snap package
-snap install core
-
 # install spotify
 snap install spotify
 
