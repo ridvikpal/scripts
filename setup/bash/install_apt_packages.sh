@@ -10,6 +10,27 @@ if [[ $EUID -ne 0 ]]; then
    exit 1
 fi
 
+# Path to the file that contains a list of deb packages to install
+DEB_PACKAGES_FILE="../text/deb_packages_to_install.txt"
+
+# Ensure the deb list file exists
+if [[ ! -f "$DEB_PACKAGES_FILE" ]]; then
+    echo "Error: Deb packages file '$DEB_PACKAGES_FILE' not found."
+    exit 1
+fi
+
+# Load the deb packages into an array
+mapfile -t DEB_PACKAGES < "$DEB_PACKAGES_FILE"
+
+# Inform the user which deb packages will be installed
+echo ""
+echo "Installing the following deb packages to the machine:"
+echo "---------------------------------"
+for PACKAGE in "${DEB_PACKAGES[@]}"; do
+    echo "$PACKAGE"
+done
+echo ""
+
 # then ensure the user has upgraded their machine first
 read -rp "This script will install Debian apt packages. Did you run apt update && apt upgrade first? (Y/n) " -n 1
 echo ""
@@ -19,55 +40,10 @@ then
     exit 1
 fi
 
-# install gnome-core
-apt-get install -y gnome-core
+# Install each deb package listed in the txt file line by line
+for PACKAGE in "${DEB_PACKAGES[@]}"; do
+    apt-get install -y $PACKAGE
+done
 
-# install utils for unpacking archives
-apt-get install -y 7zip file-roller
-
-# install fingerprint support:
-apt-get install -y fprintd libpam-fprintd
-
-# install apt-file
-apt-get install -y apt-file
-# and update it's repository
+# afterwards update the apt-file database
 apt-file update
-
-# install rsync
-apt-get install -y rsync
-
-# install recommended fonts
-apt-get install -y fonts-recommended
-
-# install chromium browser
-apt-get install -y chromium
-
-# install the default java runtime
-apt-get install -y default-jre
-
-# install git
-apt-get install -y git
-
-# install python3
-apt-get install -y python3 python3-pip python3-venv
-
-# install c, c++ dev packages
-apt-get install -y gcc g++ gdb make
-
-# install nodejs and npm
-apt-get install -y nodejs npm
-
-# install latex via texlive
-apt-get install -y texlive texlive-latex-extra chktex
-
-# install libreoffice
-apt-get install -y libreoffice libreoffice-gnome
-
-# install libreoffice thesaurus and spell checkers
-apt-get install -y hunspell-en-ca hunspell-en-gb hunspell-en-us hunspell-en-au mythes-en-us mythes-en-au hyphen-en-us hyphen-en-gb
-
-# install vlc
-apt-get install -y vlc
-
-# install shotwell
-apt-get install -y shotwell
