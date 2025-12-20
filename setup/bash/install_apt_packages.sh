@@ -34,8 +34,8 @@ apt-get install -y python3 python3-pip python3-venv
 # install c, c++ dev packages
 apt-get install -y gcc g++ gdb make
 
-# install docker
-#apt-get install -y docker.io docker-compose
+# install nodejs and npm
+apt-get install -y nodejs npm
 
 # install latex via texlive
 apt-get install -y texlive texlive-latex-extra chktex
