@@ -32,7 +32,7 @@ done
 echo ""
 
 # then ensure the user has upgraded their machine first
-read -rp "This script will install Debian apt packages. Did you run apt update && apt upgrade first? (Y/n) " -n 1
+read -rp "This script will install apt packages. Did you run apt update && apt upgrade first? (Y/n) " -n 1
 echo ""
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
