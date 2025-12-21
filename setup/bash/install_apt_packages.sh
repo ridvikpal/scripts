@@ -39,6 +39,7 @@ then
     # if the user did not, then exit
     exit 1
 fi
+echo ""
 
 # Install each deb package listed in the txt file line by line
 for PACKAGE in "${DEB_PACKAGES[@]}"; do

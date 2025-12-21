@@ -38,6 +38,7 @@ then
     # if the user did not, then exit
     exit 1
 fi
+echo ""
 
 # Install each snap package listed in the txt file line by line
 for PACKAGE in "${SNAP_PACKAGES[@]}"; do
