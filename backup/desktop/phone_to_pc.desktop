@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
-Name=phone_to_pc
+Name=Backup Phone to PC
 Terminal=true
 Exec=bash -c "cd $HOME/github/scripts/backup/bash && ./phone_to_pc.sh"

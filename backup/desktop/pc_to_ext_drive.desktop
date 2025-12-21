@@ -1,5 +1,5 @@
 [Desktop Entry]
 Type=Application
-Name=pc_to_ext_drive
+Name=Backup PC to External Drive
 Terminal=true
 Exec=bash -c "cd $HOME/github/scripts/backup/bash && ./pc_to_ext_drive.sh"
