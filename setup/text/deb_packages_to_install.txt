@@ -1,17 +1,8 @@
-gnome-core
-7zip file-roller
-fprintd libpam-fprintd
-apt-file
-rsync
-fonts-recommended
-chromium
 default-jre
 git
 python3 python3-pip python3-venv
 gcc g++ gdb make
-nodejs npm
 texlive texlive-latex-extra chktex
-libreoffice libreoffice-gnome
-hunspell-en-ca hunspell-en-gb hunspell-en-us hunspell-en-au mythes-en-us mythes-en-au hyphen-en-us hyphen-en-gb
+libreoffice
 vlc
 shotwell

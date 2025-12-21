@@ -1,2 +1,3 @@
 spotify
 code --classic
+node --classic
