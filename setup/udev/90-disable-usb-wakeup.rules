@@ -1,0 +1,12 @@
+####################
+# This udev rule is used to disable waking up the machine
+# from specific connected USB devices
+#
+# The idVendor and idProduct can be found using:
+# lsusb | grep $device_name
+####################
+
+# disable waking up the machine from the Logitech Unifying Receiver
+# idVendor = 046d
+# idProduct = c52b
+ACTION=="add|bind", SUBSYSTEM=="usb", DRIVERS=="usb", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="c52b", ATTR{power/wakeup}="disabled"
