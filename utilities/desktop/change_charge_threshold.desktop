@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Change Battery Charge Thresholds
+Terminal=true
+Exec=bash -c "sudo $HOME/github/scripts/utilities/bash/change_charge_threshold.sh"
