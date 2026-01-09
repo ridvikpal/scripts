@@ -1,3 +1,4 @@
 chromium
 spotify
+node --classic
 code --classic
