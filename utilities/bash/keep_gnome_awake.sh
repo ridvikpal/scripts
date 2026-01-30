@@ -1,13 +1,13 @@
 #!/bin/bash
 
 ####################
-# This script is used to prevent GNOME from idling or sleeping 
+# This script is used to prevent GNOME from idling or sleeping
 # using gnome-session-inhibit.
 ####################
 
 # Setup the reason for the inhibition.
 # It will be visible in 'gnome-session-inhibit -l'.
-INHIBIT_REASON="Running keep_awake.sh script"
+INHIBIT_REASON="Running keep_gnome_awake.sh script"
 
 # Inform the user the system is being inhibited
 echo "Inhibiting the GNOME desktop session from idling or suspending"
