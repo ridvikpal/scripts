@@ -14,7 +14,7 @@ SNAP_PACKAGES_FILE="../text/snap_packages_to_install.txt"
 
 # Ensure the snap packages file exists
 if [[ ! -f "${SNAP_PACKAGES_FILE}" ]]; then
-    echo "Error: Snap packages file '${SNAP_PACKAGES_FILE}' not found."
+    echo "ERROR: Snap packages file '${SNAP_PACKAGES_FILE}' not found."
     exit 1
 fi
 

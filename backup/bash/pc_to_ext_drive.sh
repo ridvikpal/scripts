@@ -12,7 +12,7 @@ FOLDERS_FILE="../text/pc_folders_to_backup.txt"
 
 # Ensure folders file exists
 if [[ ! -f "${FOLDERS_FILE}" ]]; then
-    echo "Error: Folder list file '${FOLDERS_FILE}' not found."
+    echo "ERROR: Folder list file '${FOLDERS_FILE}' not found."
     exit 1
 fi
 

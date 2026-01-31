@@ -15,7 +15,7 @@ DEB_PACKAGES_FILE="../text/deb_packages_to_install.txt"
 
 # Ensure the deb packages file exists
 if [[ ! -f "${DEB_PACKAGES_FILE}" ]]; then
-    echo "Error: Deb packages file '${DEB_PACKAGES_FILE}' not found."
+    echo "ERROR: Deb packages file '${DEB_PACKAGES_FILE}' not found."
     exit 1
 fi
 
