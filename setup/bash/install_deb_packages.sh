@@ -6,7 +6,7 @@
 
 # first ensure the user is running this script as root
 if [[ "${EUID}" -ne 0 ]]; then
-   echo "This script must be run as root (use sudo)" 
+   echo "This script must be run as root (use sudo)"
    exit 1
 fi
 
@@ -34,8 +34,7 @@ echo ""
 # then ensure the user has upgraded their machine first
 read -rp "This script will install apt packages. Did you run apt update && apt upgrade first? (Y/n) " -n 1
 echo ""
-if [[ ! "${REPLY}" =~ ^[Yy]$ ]]
-then
+if [[ ! "${REPLY}" =~ ^[Yy]$ ]]; then
     # if the user did not, then exit
     exit 1
 fi
