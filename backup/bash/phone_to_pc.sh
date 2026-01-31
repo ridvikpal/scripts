@@ -1,8 +1,7 @@
 #!/bin/bash
 
 ####################
-# This script is used to backup folders from an Android phone using rsync
-# and go-mtpfs.
+# This script is used to backup folders from an Android phone using kioclient
 
 # The folders to backup are stored in $FOLDERS_FILE
 # and must have unique leaf names
@@ -29,53 +28,47 @@ for folder in "${FOLDERS[@]}"; do
 done
 echo ""
 
-# Then ask for their confirmation to continue
-read -rp "Continue? (Y/n) " -n 1
-if [[ ! "${REPLY}" =~ ^[Yy]$ ]]; then
-    # if the user did not say yes, then exit
-    exit 1
-fi
+# get all connected phones and load them into an array
+mapfile -t CONNECTED_PHONES < <(kioclient ls "mtp:/" | sed '1d;$d')
+
+# prompt the user choose a phone to backup files from
 echo ""
+echo "Choose a connected phone:"
+select PHONE in "${CONNECTED_PHONES[@]}"; do
+    if [[ -n "${PHONE}" ]]; then
+        echo "You selected phone: ${PHONE}"
+        break
+    else
+        echo "Invalid choice."
+        read -rp "Press any key to exit..."
+        exit 1
+    fi
+done
 
-# The mount point to mount the phone's MTP file system via go-mtpfs
-MOUNT_POINT="${HOME}/mnt/phone"
-# Ensure the mount point has been created before proceeding
-mkdir -p "${MOUNT_POINT}"
-
-# Check if the phone has already been mounted
-if mountpoint -q "${MOUNT_POINT}"; then
-    echo "Device already mounted at ${MOUNT_POINT}"
-# Else mount the phone
-else
-    echo "Attempting to mount phone with go-mtpfs..."
-    go-mtpfs "${MOUNT_POINT}" &
-    # Give MTP a moment to initialize by delaying for 3 seconds
-    sleep 3
-fi
-
-# Verify mount success and exist if the mount failed
-if ! mountpoint -q "${MOUNT_POINT}"; then
-    echo "ERROR: Failed to mount phone. Is it plugged in with file transfer mode enabled?"
-    read -rp "Press enter to exit..."
-    exit 1
+# Get the phone's storage name (e.g., Internal shared storage)
+STORAGE_NAME=$(kioclient ls "mtp:/${PHONE}" | sed -n '2{p;q}')
+# Inform the user if the storage name cannot be found
+if [[ -z "${STORAGE_NAME}" ]]; then
+    echo "ERROR: Could not find storage on ${PHONE}. Is File Transfer (MTP) mode enabled on the phone?"
+    read -rp "Press any key to exit..."
+        exit 1
 fi
 
 # Get the phone's root data path
-PHONE_DATA_PATH="${MOUNT_POINT}/Internal shared storage"
-# Inform the user of the root folders that are visible
-echo "The folders found at ${PHONE_DATA_PATH} are:"
-ls "${PHONE_DATA_PATH}"
+PHONE_DATA_PATH="mtp:/${PHONE}/${STORAGE_NAME}"
 
 # Setup the backup path on pc
 BACKUP_PATH="${HOME}/Phone"
+# Delete the backup path if it exists before proceeding
+# because we want to overwrite it with new data
+rm -rf "${BACKUP_PATH}"
+# Create the backup path again.
+mkdir "${BACKUP_PATH}"
 
 # Inform the user the backup is starting
 echo ""
 echo "Starting backup to: ${BACKUP_PATH}"
 echo "--------------------------------"
-
-# Create the backup path if it doesn't exist.
-mkdir -p "${BACKUP_PATH}"
 
 # Backup each folder 1 by 1
 for SRC in "${FOLDERS[@]}"; do
@@ -84,41 +77,18 @@ for SRC in "${FOLDERS[@]}"; do
 
     # Extract folder name (leaf)
     LEAF_NAME=$(basename "${SRC}")
-    # Create the backup path using the leaf name
-    DEST="${BACKUP_PATH}/${LEAF_NAME}"
 
     echo ""
-    echo "Backing up '${FULL_SRC_PATH}' -> '${DEST}'"
+    echo "Backing up '${FULL_SRC_PATH}' -> '${BACKUP_PATH}/${LEAF_NAME}'"
 
-    # Backup using rsync, ignoring system (.*) files
-    # and other file properties since MTP doesn't support them
-    rsync -rvh \
-        --size-only \
-        --no-perms \
-        --no-times \
-        --no-links \
-        --delete-delay \
-        --itemize-changes \
-        --info=progress2 \
-        --exclude='.*' \
-        "${FULL_SRC_PATH}/" "${DEST}/"
+    # Backup folder using kioclient
+    kioclient copy "${FULL_SRC_PATH}" "${BACKUP_PATH}/"
 
+    # inform the user if there was an error backing up a specific folder
     if [[ $? -ne 0 ]]; then
-        echo "WARNING: rsync reported an issue for ${SRC}"
+        echo "WARNING: kioclient reported an issue for ${SRC}"
     fi
 done
-
-# Unmount the phone after backup
-fusermount -u "${MOUNT_POINT}"
-# Notify the user if the unmount was successful
-if [[ $? -eq 0 ]]; then
-    echo "Successfully unmounted phone from ${MOUNT_POINT}."
-# Else notify the user the unmount was not successful
-else
-    echo "ERROR: Failed to unmount the phone from ${MOUNT_POINT}. The device may be busy..."
-    read -rp "Press enter to exit..."
-    exit 1
-fi
 
 # Inform the user the backup is completed.
 echo ""
