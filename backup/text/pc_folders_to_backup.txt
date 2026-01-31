@@ -4,3 +4,4 @@ $HOME/Videos
 $HOME/Desktop
 $HOME/Downloads
 $HOME/Music
+$HOME/Phone
